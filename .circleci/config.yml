@@ -34,5 +34,8 @@ jobs:
              
       # run tests!
       #- run: npm run test
-
+      - run:
+          name: Deploy Over SSH
+          command: |
+            ssh dave@23.96.33.172 "ps -ef"
 
