@@ -37,7 +37,9 @@ jobs:
             echo "my artifact file" > /tmp/artifact-1;
             mkdir /tmp/artifacts;
             ls
-            cat /etc/os-release
+            AZ_REPO=$(lsb_release -cs)
+            echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ_REPO main" | \
+             sudo tee /etc/apt/sources.list.d/azure-cli.list
             tar -zcvf /tmp/artifacts/archive-name.tar.gz *
             echo "my artifact files in a dir" > /tmp/artifacts/artifact-2;   
       - store_artifacts:
