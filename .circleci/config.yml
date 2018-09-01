@@ -38,5 +38,5 @@ jobs:
           name: Deploy Azure WebApp
           command: |
             git status
-            git remote add azure https://p6238f7usmcnew:Usmc112461@dtapp2.scm.azurewebsites.net:443/dtapp2.git
+            git remote add azure https://p6238f7usmcnew:$GIT_PASS@dtapp2.scm.azurewebsites.net:443/dtapp2.git
             git push azure
