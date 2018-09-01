@@ -8,6 +8,7 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/node:7.10
+      - image: microsoft/azure-cli
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -37,7 +38,6 @@ jobs:
             echo "my artifact file" > /tmp/artifact-1;
             mkdir /tmp/artifacts;
             ls
-            az login
             tar -zcvf /tmp/artifacts/archive-name.tar.gz *
             echo "my artifact files in a dir" > /tmp/artifacts/artifact-2;   
       - store_artifacts:
