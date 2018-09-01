@@ -38,4 +38,4 @@ jobs:
           name: Deploy Over SSH
           command: |
             git status
-
+            git remote add azure https://p6238f7usmcnew@dtapp2.scm.azurewebsites.net:443/dtapp2.git
