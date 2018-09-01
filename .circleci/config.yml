@@ -39,7 +39,7 @@ jobs:
             ls
             echo "my artifact files in a dir" > /tmp/artifacts/artifact-2;   
       - store_artifacts:
-          path: /node_modules
+          path: /node_modules/*
           destination: artifact-file
 
       - store_artifacts:
