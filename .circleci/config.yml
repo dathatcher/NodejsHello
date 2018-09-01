@@ -38,11 +38,11 @@ jobs:
             mkdir /tmp/artifacts;
             echo "my artifact files in a dir" > /tmp/artifacts/artifact-2;   
       - store_artifacts:
-          path: /tmp/artifact-1
+          path: /node_modules
           destination: artifact-file
 
       - store_artifacts:
-          path: /tmp/artifacts
+          path: /node_modules
       # run tests!
       #- run: npm run test
       - run:
