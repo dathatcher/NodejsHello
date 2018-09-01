@@ -32,12 +32,12 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
-          name: Creating Artifacts
+          name: Creating Artifacts & Setting up Enviornment
           command: |
             echo "my artifact file" > /tmp/artifact-1;
             mkdir /tmp/artifacts;
             ls
-            sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+            cat /etc/os-release
             tar -zcvf /tmp/artifacts/archive-name.tar.gz *
             echo "my artifact files in a dir" > /tmp/artifacts/artifact-2;   
       - store_artifacts:
