@@ -7,7 +7,6 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: azuresdk/azure-cli-python
       - image: circleci/node:7.10
            
       # Specify service dependencies here if necessary
@@ -51,10 +50,20 @@ jobs:
       - store_artifacts:
           path:  /tmp/artifacts
           destination: artifact-file
-     
-      - run:
-          name: Deploy Azure WebApp
-          command: |
-            git status
-            git remote add azure https://$AZURE_DEPLOY_USER:$AZURE_DEPLOY_PASS@dtapp2.scm.azurewebsites.net:443/dtapp2.git
-            git push azure
+    deploy:
+        docker:
+         # specify the version you desire here
+        - image: azuresdk/azure-cli-python
+      steps:
+         - run:
+             name: Deploy Azure WebApp
+             command: |
+               git status
+               git remote add azure https://$AZURE_DEPLOY_USER:$AZURE_DEPLOY_PASS@dtapp2.scm.azurewebsites.net:443/dtapp2.git
+               git push azure
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build
+      - deploy
