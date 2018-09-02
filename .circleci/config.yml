@@ -28,6 +28,7 @@ jobs:
           - v1-dependencies-
 
       - run: npm install
+      - run: npm build  
       - save_cache:
           paths:
             - node_modules
@@ -39,6 +40,7 @@ jobs:
             mkdir /tmp/artifacts;
             tar -zcvf /tmp/artifacts/archive-name.tar.gz *
             echo "my artifact files in a dir" > /tmp/artifacts/artifact-2; 
+            echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ wheezy main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
             deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ wheezy main
             sudo apt-key adv --keyserver packages.microsoft.com --recv-keys 417A0893
             sudo apt-get install apt-transport-https
