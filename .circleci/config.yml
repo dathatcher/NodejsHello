@@ -54,7 +54,8 @@ jobs:
         docker:
          # specify the version you desire here
         - image: azuresdk/azure-cli-python
-      steps:
+        working_directory: ~/repo
+        steps:
          - run:
              name: Deploy Azure WebApp
              command: |
