@@ -63,8 +63,7 @@ jobs:
           az -v
           az appservice plan create -g myResourceGroupVM -n ServicePlandt
         #  az webapp create --name dtapp2 --resource-group myResourceGroupVM --plan ServicePlandt
-          az webapp create -g myResourceGroupVM -p ServicePlandt -n dtapp2 --runtime "node|7.10"
-
+       
 workflows:
   version: 2
   build_and_deploy:
