@@ -70,5 +70,5 @@ workflows:
   build_and_deploy:
     jobs:
       - buildInfa
-      - buildApp
+    #  - buildApp
       
