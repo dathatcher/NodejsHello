@@ -8,7 +8,7 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/node:7.10
-      - image: microsoft/azure-cli
+      #- image: microsoft/azure-cli
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -33,19 +33,21 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
-          name: Creating Artifacts & Setting up Enviornment
+          name: Creating Artifacts & Setting up Deployment Enviornment
           command: |
             echo "my artifact file" > /tmp/artifact-1;
             mkdir /tmp/artifacts;
-            docker run -it microsoft/azure-cli
             tar -zcvf /tmp/artifacts/archive-name.tar.gz *
-            echo "my artifact files in a dir" > /tmp/artifacts/artifact-2;   
+            echo "my artifact files in a dir" > /tmp/artifacts/artifact-2; 
+            sudo apt-key adv --keyserver packages.microsoft.com --recv-keys 417A0893
+            sudo apt-get install apt-transport-https
+            sudo apt-get update && sudo apt-get install azure-cli 
       - store_artifacts:
           path:  /tmp/artifacts
           destination: artifact-file
 
-      - store_artifacts:
-          path:  /tmp/artifacts
+      #- store_artifacts:
+       #   path:  /tmp/artifacts
       # run tests!
       #- run: npm run test
       - run:
