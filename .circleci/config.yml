@@ -64,7 +64,7 @@ jobs:
     docker:
       - image: microsoft/azure-cli:latest
     steps:
-      # LOGIN ONTO AZURE WITH EXISTING SERVICE PRINCIPAL
+      # LOGIN ONTO AZURE WITH EXISTING SERVICE PRINCIPALe
       - run: |
           az login --service-principal -u $AZURE_SERVICE_PRINC --password $AZURE_SERVICE_PRINC_PASSWORD --tenant $AZURE_TENANT
           az webapp delete -n $AZ_WEBAPP_NAME -g $AZ_RESOURCE_GRP                
