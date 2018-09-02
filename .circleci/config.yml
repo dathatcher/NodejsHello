@@ -59,8 +59,8 @@ jobs:
       - run: |
           #  az login --service-principal -u $SERVICE_PRINCIPAL --password $SERVICE_PRINCIPAL_PASS --tenant $SERVICE_TENANT
           #  az account set --subscription $SUBSCRIPTION_NAME_OR_ID
-          az -v
-          az -v
+          az login --service-principal -u $AZURE_SERVICE_PRINC --password $AZURE_SERVICE_PRINC_PASSWORD --tenant $AZURE_TENANT
+          
 workflows:
   version: 2
   build_and_deploy:
