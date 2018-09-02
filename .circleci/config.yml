@@ -55,7 +55,7 @@ jobs:
     docker:
       - image: microsoft/azure-cli:latest
     steps:
-      # LOGIN ONTO AZURE WITH EXISTING SERVICE PRINCIPAL
+      # LOGIN ONTO AZURE WITH EXISTING SERVICE PRINCIPAL 
       - run: |
           az login --service-principal -u $AZURE_SERVICE_PRINC --password $AZURE_SERVICE_PRINC_PASSWORD --tenant $AZURE_TENANT
           az appservice plan create -g $AZ_RESOURCE_GRP -n $AZ_SERVICE_PLAN
