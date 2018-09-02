@@ -61,7 +61,7 @@ jobs:
           az login --service-principal -u $AZURE_SERVICE_PRINC --password $AZURE_SERVICE_PRINC_PASSWORD --tenant $AZURE_TENANT
         #  az appservice plan create --name ServicePlandt --resource-group myResourceGroupVM --sku FREE
         #  az webapp create --name dtapp2 --resource-group myResourceGroupVM --plan ServicePlandt
-          
+                  
 workflows:
   version: 2
   build_and_deploy:
