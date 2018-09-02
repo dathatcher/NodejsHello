@@ -40,7 +40,7 @@ jobs:
             mkdir /tmp/artifacts;
             tar -zcvf /tmp/artifacts/archive-name.tar.gz *
             echo "my artifact files in a dir" > /tmp/artifacts/artifact-2; 
-           
+           curl -L https://aka.ms/InstallAzureCli | bash
       - store_artifacts:
           path:  /tmp/artifacts
           destination: artifact-file
