@@ -51,7 +51,7 @@ jobs:
             git status
             git remote add azure https://$AZURE_DEPLOY_USER:$AZURE_DEPLOY_PASS@$AZURE_GIT_DEPLOY_URL
             git push azure
-  buildAZWebApp:
+  provisionAZWebApp:
     docker:
       - image: microsoft/azure-cli:latest
     steps:
@@ -62,9 +62,9 @@ jobs:
           az webapp create -g $AZ_RESOURCE_GRP -p $AZ_SERVICE_PLAN -n $AZ_WEBAPP_NAME --deployment-local-git          
 workflows:
   version: 2
-  build_and_deploy:
+  provision_build_and_deploy:
     jobs:
-     - buildAZWebApp
+     - provisionAZWebApp
      - buildApp:
           requires:
-            - buildAZWebApp
+            - provisionAZWebApp
