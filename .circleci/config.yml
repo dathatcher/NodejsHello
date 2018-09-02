@@ -76,3 +76,7 @@ workflows:
      - buildApp:
           requires:
             - provisionAZWebApp
+     - unProvisionAZWebApp:
+          type: approval
+          requires:
+           - buildApp       
