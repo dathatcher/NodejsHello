@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
       # specify the version you desire here
-      - image: circleci/node:7.10
+      #- image: circleci/node:7.10
       - image: azuresdk/azure-cli-python
       
       # Specify service dependencies here if necessary
@@ -26,7 +26,14 @@ jobs:
           - v1-dependencies-{{ checksum "package.json" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
-
+ 
+      # LOGIN ONTO AZURE WITH EXISTING SERVICE PRINCIPAL
+      - run: |
+            #az login --service-principal -u $SERVICE_PRINCIPAL --password $SERVICE_PRINCIPAL_PASS --tenant $SERVICE_TENANT
+            #az account set --subscription $SUBSCRIPTION_NAME_OR_ID
+            az -v
+            az -v
+            
       - run: npm install
       #- run: npm build  
       - save_cache:
@@ -44,14 +51,7 @@ jobs:
       - store_artifacts:
           path:  /tmp/artifacts
           destination: artifact-file
-
-      # LOGIN ONTO AZURE WITH EXISTING SERVICE PRINCIPAL
-      - run: |
-            #az login --service-principal -u $SERVICE_PRINCIPAL --password $SERVICE_PRINCIPAL_PASS --tenant $SERVICE_TENANT
-            #az account set --subscription $SUBSCRIPTION_NAME_OR_ID
-            az -v
-            az -v
-            
+     
       - run:
           name: Deploy Azure WebApp
           command: |
