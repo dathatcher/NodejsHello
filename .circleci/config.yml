@@ -8,7 +8,7 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/node:7.10
-      #- image: microsoft/azure-cli
+      - image: azuresdk/azure-cli-python
       
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -45,10 +45,13 @@ jobs:
           path:  /tmp/artifacts
           destination: artifact-file
 
-      #- store_artifacts:
-       #   path:  /tmp/artifacts
-      # run tests!
-      #- run: npm run test
+      # LOGIN ONTO AZURE WITH EXISTING SERVICE PRINCIPAL
+      - run: |
+            #az login --service-principal -u $SERVICE_PRINCIPAL --password $SERVICE_PRINCIPAL_PASS --tenant $SERVICE_TENANT
+            #az account set --subscription $SUBSCRIPTION_NAME_OR_ID
+            az -v
+            az -v
+            
       - run:
           name: Deploy Azure WebApp
           command: |
