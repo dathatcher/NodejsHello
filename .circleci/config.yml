@@ -8,7 +8,6 @@ jobs:
    docker:
       # specify the version you desire here
       - image: circleci/node:7.10
-           
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
@@ -26,13 +25,6 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
  
-      # LOGIN ONTO AZURE WITH EXISTING SERVICE PRINCIPAL
-      - run: |
-            #az login --service-principal -u $SERVICE_PRINCIPAL --password $SERVICE_PRINCIPAL_PASS --tenant $SERVICE_TENANT
-            #az account set --subscription $SUBSCRIPTION_NAME_OR_ID
-            az -v
-            az -v
-            
       - run: npm install
       #- run: npm build  
       - save_cache:
