@@ -5,7 +5,7 @@
 version: 2
 jobs:
   build:
-    docker:
+   docker:
       # specify the version you desire here
       - image: circleci/node:7.10
            
@@ -49,11 +49,11 @@ jobs:
             
       - store_artifacts:
           path:  /tmp/artifacts
-          destination: artifact-file
-    deploy:
-        docker:
+          destination: artifact-fil
+  deploy:
+    docker:
          # specify the version you desire here
-        - image: azuresdk/azure-cli-python
+           - image: azuresdk/azure-cli-python
         working_directory: ~/repo
         steps:
          - run:
