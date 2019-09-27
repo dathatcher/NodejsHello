@@ -14,7 +14,7 @@ pipeline {
         }
 		stage('Packaging Artifact') {
             steps {
-                echo 'Packaging....'
+             //   echo 'Packaging....'
             }
         }
         stage('Deploy Atrifact Development') {
