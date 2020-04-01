@@ -59,9 +59,21 @@ jobs:
     steps:
       # LOGIN ONTO AZURE WITH EXISTING SERVICE PRINCIPAL 
       - run:
-          name: provision Infrastructure
+          name: Provision UAT Infrastructure
           command: |
-            echo "provision Infrastructur"         
+            echo "provision Infrastructur"  
+      - run:
+          name: Apply SIT Configuration
+          command: |
+            echo "Apply SIT Configuration"  
+      - run:
+          name: Deploy SIT
+          command: |
+            echo "Deploy SIT"  
+      - run:
+          name: SIT Security Source Scan
+          command: |
+            echo "SIT Security Source Scan"                      
   unProvisionDeploy:
     docker:
       - image: microsoft/azure-cli:latest
