@@ -48,26 +48,21 @@ jobs:
       - run:
           name: Deploy Azure Infrastructure
           command: |
-            git status
-            git remote add azure https://$AZURE_DEPLOY_USER:$AZURE_DEPLOY_PASS@$AZURE_GIT_DEPLOY_URL
-            git push azure
+            echo "Deploy"
   provisionAZWebApp:
     docker:
       - image: microsoft/azure-cli:latest
     steps:
       # LOGIN ONTO AZURE WITH EXISTING SERVICE PRINCIPAL 
         - run: |
-            az login --service-principal -u $AZURE_SERVICE_PRINC --password $AZURE_SERVICE_PRINC_PASSWORD --tenant $AZURE_TENANT
-            az appservice plan create -g $AZ_RESOURCE_GRP -n $AZ_SERVICE_PLAN
-            az webapp create -g $AZ_RESOURCE_GRP -p $AZ_SERVICE_PLAN -n $AZ_WEBAPP_NAME --deployment-local-git      
+            echo "run"      
   unProvisionAZWebApp:
     docker:
       - image: microsoft/azure-cli:latest
     steps:
       # LOGIN ONTO AZURE WITH EXISTING SERVICE PRINCIPALe
       - run: |
-          az login --service-principal -u $AZURE_SERVICE_PRINC --password $AZURE_SERVICE_PRINC_PASSWORD --tenant $AZURE_TENANT
-          az webapp delete -n $AZ_WEBAPP_NAME -g $AZ_RESOURCE_GRP                
+          echo "mlogin"             
 workflows:
   version: 2
   provision_build_and_deploy:
