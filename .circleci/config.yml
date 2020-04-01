@@ -49,7 +49,7 @@ jobs:
           name: Deploy Azure Infrastructure
           command: |
             echo "Deploy"
-  provisionAZWebApp:
+  provisionInfra:
     docker:
       - image: microsoft/azure-cli:latest
     steps:
@@ -67,10 +67,10 @@ workflows:
   version: 2
   provision_build_and_deploy:
     jobs:
-     - provisionAZWebApp
+     - provisionInfra
      - buildApp:
           requires:
-            - provisionAZWebApp
+            - provisionInfra
      - unProvisionAZWebApp:
           type: approval
           requires:
