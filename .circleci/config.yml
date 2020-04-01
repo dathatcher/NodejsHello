@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  ContinuousDeployment:
+  ContinuousIntegration:
     docker:
       # specify the version you desire here
       - image: circleci/node:7.10
@@ -49,7 +49,7 @@ jobs:
           name: Quality Scan [Sonarqube]
           command: |
             echo "SonarQube Scan"
-  ContinuousIntegration:
+  ContinuousDeployment:
     docker:
       - image: microsoft/azure-cli:latest
     steps:
