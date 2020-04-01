@@ -59,17 +59,17 @@ jobs:
     steps:
       # LOGIN ONTO AZURE WITH EXISTING SERVICE PRINCIPAL 
       - run:
-          name: Provision UAT Infrastructure
+          name: SIT - Provision Infrastructure
           command: |
             echo "provision Infrastructur"  
       - run:
-          name: Apply SIT Configuration
+          name: SIT - Apply Configuration
           command: |
-            echo "Apply SIT Configuration"  
+            echo "SIT - Apply Configuration"  
       - run:
-          name: Deploy SIT
+          name: SIT - Deploy
           command: |
-            echo "Deploy SIT"  
+            echo "SIT - Deploy"  
       - run:
           name: SIT Security Source Scan
           command: |
