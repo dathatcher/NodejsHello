@@ -23,7 +23,7 @@ jobs:
           # fallback to using the latest cache if no exact match is 
           - v1-dependencies-
 
-      - run: npm install
+      - run: npm build
       #- run: npm build  
       - save_cache:
           paths:
@@ -46,9 +46,9 @@ jobs:
       # run tests!
       #- run: npm run test
       - run:
-          name: Deploy Infrastructure
+          name: Quality Scan [Sonarqube]
           command: |
-            echo "Deploy"
+            echo "SonarQube Scan"
   provisionInfra:
     docker:
       - image: microsoft/azure-cli:latest
