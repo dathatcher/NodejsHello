@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  ContinuousIntegration:
+  ContinuousDeployment:
     docker:
       # specify the version you desire here
       - image: circleci/node:7.10
@@ -30,7 +30,7 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
-          name: Creating Artifacts & Setting up Deployment Enviornment
+          name: Creating Artifacts 
           command: |
             echo "my artifact file" > /tmp/artifact-1;
             mkdir /tmp/artifacts;
@@ -49,7 +49,7 @@ jobs:
           name: Quality Scan [Sonarqube]
           command: |
             echo "SonarQube Scan"
-  provisionInfra:
+  ContinuousIntegration:
     docker:
       - image: microsoft/azure-cli:latest
     steps:
@@ -67,11 +67,11 @@ workflows:
   version: 2
   provision_build_and_deploy:
     jobs:
-     - provisionInfra
-     - ContinuousIntegration:
+     - ContinuousIntegration
+     - ContinuousDeployment:
           requires:
-            - provisionInfra
+            - ContinuousIntegration
      - unProvisionDeploy:
           type: approval
           requires:
-           - ContinuousIntegration       
+           - ContinuousDeployment       
