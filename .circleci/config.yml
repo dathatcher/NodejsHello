@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  buildApp:
+  ContinuousIntegration:
     docker:
       # specify the version you desire here
       - image: circleci/node:7.10
@@ -68,10 +68,10 @@ workflows:
   provision_build_and_deploy:
     jobs:
      - provisionInfra
-     - buildApp:
+     - ContinuousIntegration:
           requires:
             - provisionInfra
      - unProvisionDeploy:
           type: approval
           requires:
-           - buildApp       
+           - ContinuousIntegration       
