@@ -1,2 +1,5 @@
 tasks:
   - init: npm install
+ports:
+  - port: 8000
+    onOpen: open-preview
