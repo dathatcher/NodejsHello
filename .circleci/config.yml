@@ -49,13 +49,19 @@ jobs:
           name: Quality Scan [Sonarqube]
           command: |
             echo "SonarQube Scan"
+      - run:
+          name: Package Artifacts [Nexus]
+          command: |
+            echo "Nexus Stor"      
   ContinuousDeployment:
     docker:
       - image: microsoft/azure-cli:latest
     steps:
       # LOGIN ONTO AZURE WITH EXISTING SERVICE PRINCIPAL 
-        - run: |
-            echo "run"      
+      - run:
+          name: provision Infrastructure
+          command: |
+            echo "provision Infrastructur"         
   unProvisionDeploy:
     docker:
       - image: microsoft/azure-cli:latest
