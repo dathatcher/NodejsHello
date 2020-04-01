@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  ContinuousIntegration:
+  Integration:
     docker:
       # specify the version you desire here
       - image: circleci/node:7.10
@@ -53,7 +53,7 @@ jobs:
           name: Package Artifacts [Nexus]
           command: |
             echo "Nexus Stor"      
-  ContinuousDeployment:
+  Deployment:
     docker:
       - image: microsoft/azure-cli:latest
     steps:
@@ -74,7 +74,7 @@ jobs:
           name: SIT Security Source Scan
           command: |
             echo "SIT Security Source Scan"                      
-  unProvisionDeploy:
+  Release:
     docker:
       - image: microsoft/azure-cli:latest
     steps:
@@ -85,11 +85,11 @@ workflows:
   version: 2
   provision_build_and_deploy:
     jobs:
-     - ContinuousIntegration
-     - ContinuousDeployment:
+     - Integration
+     - Deployment:
           requires:
-            - ContinuousIntegration
-     - unProvisionDeploy:
+            - Integration
+     - Release:
           type: approval
           requires:
-           - ContinuousDeployment       
+           - Deployment       
