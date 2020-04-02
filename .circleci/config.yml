@@ -82,7 +82,19 @@ jobs:
       - run:
           name: Integration Testing  - UnProvision Infrastructure [LAMP WebApp Stack]
           command: |
-            echo "unprovision Infrastructure"                                   
+            echo "unprovision Infrastructure"
+      - run:
+          name: User Acceptance Testing  - Provision Infrastructure [LAMP WebApp Stack]
+          command: |
+            echo "provision Infrastructure"  
+      - run:
+          name: User Acceptance Testing  - Apply Configuration [LAMP WebApp Stack]
+          command: |
+            echo "User Acceptance Testing  - Apply Configuration"  
+      - run:
+          name: User Acceptance Testing  - Deploy
+          command: |
+            echo "User Acceptance Testing  - Deploy Artifact [WebApp]"                                          
   Release:
     docker:
       - image: microsoft/azure-cli:latest
