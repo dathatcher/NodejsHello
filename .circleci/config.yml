@@ -109,7 +109,11 @@ jobs:
     steps:
       # LOGIN ONTO AZURE WITH EXISTING SERVICE PRINCIPALe
       - run: |
-          echo "mlogin"             
+          echo "mlogin"
+      - run:
+          name: Production - Cutover Staging Environment to Production 
+          command: |
+            echo "production Release - DNS Change"                 
 workflows:
   version: 2
   provision_build_and_deploy:
