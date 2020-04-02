@@ -62,8 +62,7 @@ jobs:
       - run:
           name: Integration Testing  - Provision Infrastructure [LAMP WebApp Stack]
           command: |
-            sleep(60)
-            echo "provision Infrastructure"  
+            sleep(60) && echo "provision Infrastructure"  
       - run:
           name: Integration Testing  - Apply Configuration [LAMP WebApp Stack]
           command: |
