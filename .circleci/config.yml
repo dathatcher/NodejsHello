@@ -56,7 +56,7 @@ jobs:
            
   Deploy Environments:
     docker:
-      - image: circleci/node:jessie-browsers
+      - image: selenium/standalone-chrome:3.1.0
       
     steps:
       # LOGIN ONTO AZURE WITH EXISTING SERVICE PRINCIPAL
