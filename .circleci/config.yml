@@ -4,7 +4,6 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/node:7.10
-      - image: circleci/node:jessie-browsers
       #- image: microsoft/azure-cli
       
       # Specify service dependencies here if necessary
@@ -58,6 +57,8 @@ jobs:
   Deploy Environments:
     docker:
       - image: microsoft/azure-cli:latest
+      - image: circleci/node:jessie-browsers
+      - image: circleci/openjdk:11.0.3-jdk-stretch
     steps:
       # LOGIN ONTO AZURE WITH EXISTING SERVICE PRINCIPAL
       - run:
