@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  Integration:
+  Integrate:
     docker:
       # specify the version you desire here
       - image: circleci/node:7.10
@@ -30,6 +30,14 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
+          name: Run Unit Tests
+          command: |
+            echo "SonarQube Scan"     
+      - run:
+          name: Vulnerability & Quality Scan [Sonarqube]
+          command: |
+            echo "SonarQube Scan"    
+      - run:
           name: Creating Artifacts 
           command: |
             echo "my artifact file" > /tmp/artifact-1;
@@ -45,31 +53,24 @@ jobs:
        #   path:  /tmp/artifacts
       # run tests!
       #- run: npm run test
-      - run:
-          name: Quality Scan [Sonarqube]
-          command: |
-            echo "SonarQube Scan"
-      - run:
-          name: Package Artifacts [Nexus]
-          command: |
-            echo "Nexus Stor"      
-  Deployment:
+           
+  Deploy:
     docker:
       - image: microsoft/azure-cli:latest
     steps:
       # LOGIN ONTO AZURE WITH EXISTING SERVICE PRINCIPAL 
       - run:
-          name: SIT - Provision Infrastructure
+          name: Integration Testing  - Provision Infrastructure [LAMP WebApp Stack]
           command: |
             echo "provision Infrastructur"  
       - run:
-          name: SIT - Apply Configuration
+          name: Integration Testing  - Apply Configuration [LAMP WebApp Stack]
           command: |
-            echo "SIT - Apply Configuration"  
+            echo "Integration Testing  - Apply Configuration"  
       - run:
-          name: SIT - Deploy
+          name: Integration Testing  - Deploy
           command: |
-            echo "SIT - Deploy"  
+            echo "Integration Testing  - Deploy Artifact [WebApp]"  
       - run:
           name: SIT Security Source Scan
           command: |
@@ -85,11 +86,11 @@ workflows:
   version: 2
   provision_build_and_deploy:
     jobs:
-     - Integration
-     - Deployment:
+     - Integrate 
+     - Deploy:
           requires:
-            - Integration
+            - Integrate 
      - Release:
           type: approval
           requires:
-           - Deployment       
+           - Deploy       
