@@ -58,7 +58,7 @@ jobs:
     docker:
       - image: microsoft/azure-cli:latest
     steps:
-      # LOGIN ONTO AZURE WITH EXISTING SERVICE PRINCIPAL 
+      # LOGIN ONTO AZURE WITH EXISTING SERVICE PRINCIPAL TEST
       - run:
           name: Integration Testing  - Provision Infrastructure [LAMP WebApp Stack]
           command: |
