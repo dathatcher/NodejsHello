@@ -108,8 +108,6 @@ jobs:
       - image: microsoft/azure-cli:latest
     steps:
       # LOGIN ONTO AZURE WITH EXISTING SERVICE PRINCIPALe
-      - run: |
-          echo "mlogin"
       - run:
           name: Production - Cutover Staging Environment to Production 
           command: |
