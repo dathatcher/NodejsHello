@@ -150,9 +150,17 @@ jobs:
     steps:
       # LOGIN ONTO AZURE WITH EXISTING SERVICE PRINCIPALe
       - run:
-          name: Production - DNS Cutover Staging Environment to Production 
+          name: Production - DNS Cutover to 'Live' Production 
           command: |
-            echo "production Release - DNS Change"                 
+            echo "production Release - DNS Change"
+      - run:
+          name: Production - Smoke Test 
+          command: |
+            echo "smaoke test"
+      - run:
+          name: Production - Start Production Monitoring 
+          command: |
+            echo "Start Monitoring"                              
 workflows:
   version: 2
   provision_build_and_deploy:
