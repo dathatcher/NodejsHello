@@ -144,7 +144,7 @@ jobs:
           name: Production - Cutover Staging Environment to Production 
           command: |
             echo "production Release - DNS Change" 
-  Release:
+  Release to Production:
     docker:
       - image: microsoft/azure-cli:latest
     steps:
