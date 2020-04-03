@@ -102,7 +102,39 @@ jobs:
       - run:
           name: User Acceptance Testing  - Deploy
           command: |
-            echo "User Acceptance Testing  - Deploy Artifact [WebApp]"                                          
+            echo "User Acceptance Testing  - Deploy Artifact [WebApp]"
+      - run:
+          name: User Acceptance Testing  - Run User Acceptance Tests
+          command: |
+            echo "User Acceptance Testing  - Run User Acceptance Tests" 
+      - run:
+          name: User Acceptance Testing  - Run Static Security Scan 
+          command: |
+            echo "User Acceptance Testing  -Run Static Security Scan"  
+      - run:
+          name: User Acceptance Testing  - Run Dynamic Security Scan 
+          command: |
+            echo "User Acceptance Testing  -Run Dynamic Security Scan"
+      - run:
+          name: User Acceptance Testing  - UnProvision Infrastructure [LAMP WebApp Stack]
+          command: |
+            echo "unprovision Infrastructure" 
+      - run:
+          name: Stage in Production  - Provision Infrastructure [LAMP WebApp Stack]
+          command: |
+            echo "provision Infrastructure" 
+      - run:
+          name: Stage in Production  - Smoke Test
+          command: |
+            echo "smoke test"
+      - run:
+          name: Stage in Production  - Run Dynamic Security Scan
+          command: |
+            echo "Dynamic security scan"  
+      - run:
+          name: Stage in Production  - Stage for DNS A/B Deployment
+          command: |
+            echo "Stage"                                                                                      
   Release:
     docker:
       - image: microsoft/azure-cli:latest
