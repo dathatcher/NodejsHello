@@ -135,13 +135,22 @@ jobs:
           name: Stage in Production  - Stage for DNS A/B Deployment
           command: |
             echo "Stage"                                                                                      
-  Release:
+  Release Approval:
     docker:
       - image: microsoft/azure-cli:latest
     steps:
       # LOGIN ONTO AZURE WITH EXISTING SERVICE PRINCIPALe
       - run:
           name: Production - Cutover Staging Environment to Production 
+          command: |
+            echo "production Release - DNS Change" 
+  Release:
+    docker:
+      - image: microsoft/azure-cli:latest
+    steps:
+      # LOGIN ONTO AZURE WITH EXISTING SERVICE PRINCIPALe
+      - run:
+          name: Production - DNS Cutover Staging Environment to Production 
           command: |
             echo "production Release - DNS Change"                 
 workflows:
@@ -152,7 +161,10 @@ workflows:
      - Deploy Environments:
           requires:
             - Integrate 
-     - Release to Production:
+     - Release Approval:
           type: approval
           requires:
-           - Deploy Environments       
+           - Deploy Environments 
+     - Release to Production:
+          requires:
+           - Release Approval             
