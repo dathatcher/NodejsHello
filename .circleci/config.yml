@@ -75,7 +75,7 @@ jobs:
       - run:
           name: Integration Testing Security Source Scan
           command: |
-            echo "Integration Testing Security Source Scan"
+            echo "Integration Testing Security Static Scan"
       - run:
           name: Integration Testing  - Run Integration Tests
           command: |
