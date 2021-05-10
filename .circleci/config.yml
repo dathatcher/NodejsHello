@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  buildApp:
+  Integrate:
     docker:
       # specify the version you desire here
       - image: circleci/node:7.10
@@ -23,14 +23,22 @@ jobs:
           # fallback to using the latest cache if no exact match is 
           - v1-dependencies-
 
-      - run: npm install
+      - run: npm build
       #- run: npm build  
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
-          name: Creating Artifacts & Setting up Deployment Enviornment
+          name: Run Unit Tests
+          command: |
+            echo "SonarQube Scan"     
+      - run:
+          name: Vulnerability & Quality Scan [Sonarqube]
+          command: |
+            echo "SonarQube Scan"    
+      - run:
+          name: Creating Artifacts 
           command: |
             echo "my artifact file" > /tmp/artifact-1;
             mkdir /tmp/artifacts;
@@ -45,38 +53,126 @@ jobs:
        #   path:  /tmp/artifacts
       # run tests!
       #- run: npm run test
-      - run:
-          name: Deploy Azure Infrastructure
-          command: |
-            git status
-            git remote add azure https://$AZURE_DEPLOY_USER:$AZURE_DEPLOY_PASS@$AZURE_GIT_DEPLOY_URL
-            git push azure
-  provisionAZWebApp:
+           
+  Deploy Environments:
     docker:
-      - image: microsoft/azure-cli:latest
+      - image: circleci/node:jessie-browsers
+      
     steps:
-      # LOGIN ONTO AZURE WITH EXISTING SERVICE PRINCIPAL 
-        - run: |
-            az login --service-principal -u $AZURE_SERVICE_PRINC --password $AZURE_SERVICE_PRINC_PASSWORD --tenant $AZURE_TENANT
-            az appservice plan create -g $AZ_RESOURCE_GRP -n $AZ_SERVICE_PLAN
-            az webapp create -g $AZ_RESOURCE_GRP -p $AZ_SERVICE_PLAN -n $AZ_WEBAPP_NAME --deployment-local-git      
-  unProvisionAZWebApp:
+      # LOGIN ONTO AZURE WITH EXISTING SERVICE PRINCIPAL
+      - run:
+          name: Integration Testing  - Provision Infrastructure [LAMP WebApp Stack]
+          command: |
+            echo "provision Infrastructure"  
+      - run:
+          name: Integration Testing  - Apply Configuration [LAMP WebApp Stack]
+          command: |
+            echo "Integration Testing  - Apply Configuration"  
+      - run:
+          name: Integration Testing  - Deploy
+          command: |
+            echo "Integration Testing  - Deploy Artifact [WebApp]"  
+      - run:
+          name: Integration Testing Security Source Scan
+          command: |
+            echo "Integration Testing Security Static Scan"
+      - run:
+          name: Integration Testing  - Run Integration Tests
+          command: |
+            echo "Run Integration Tests" 
+      - run:
+          name: Integration Testing  - UnProvision Infrastructure [LAMP WebApp Stack]
+          command: |
+            echo "unprovision Infrastructure"
+      - run:
+          name: Download Selenium
+          command: curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
+      - run:
+          name: Start Selenium          
+          command: java -jar selenium-server-standalone-3.5.3.jar -log selenium.log
+          background: true      
+      - run:
+          name: User Acceptance Testing  - Provision Infrastructure [LAMP WebApp Stack]
+          command: |
+            echo "provision Infrastructure"  
+      - run:
+          name: User Acceptance Testing  - Apply Configuration [LAMP WebApp Stack]
+          command: |
+            echo "User Acceptance Testing  - Apply Configuration"  
+      - run:
+          name: User Acceptance Testing  - Deploy
+          command: |
+            echo "User Acceptance Testing  - Deploy Artifact [WebApp]"
+      - run:
+          name: User Acceptance Testing  - Run User Acceptance Tests
+          command: |
+            echo "User Acceptance Testing  - Run User Acceptance Tests" 
+      - run:
+          name: User Acceptance Testing  - Run Static Security Scan 
+          command: |
+            echo "User Acceptance Testing  -Run Static Security Scan"  
+      - run:
+          name: User Acceptance Testing  - Run Dynamic Security Scan 
+          command: |
+            echo "User Acceptance Testing  -Run Dynamic Security Scan"
+      - run:
+          name: User Acceptance Testing  - UnProvision Infrastructure [LAMP WebApp Stack]
+          command: |
+            echo "unprovision Infrastructure" 
+      - run:
+          name: Stage in Production  - Provision Infrastructure [LAMP WebApp Stack]
+          command: |
+            echo "provision Infrastructure" 
+      - run:
+          name: Stage in Production  - Smoke Test
+          command: |
+            echo "smoke test"
+      - run:
+          name: Stage in Production  - Run Dynamic Security Scan
+          command: |
+            echo "Dynamic security scan"  
+      - run:
+          name: Stage in Production  - Stage for DNS A/B Deployment
+          command: |
+            echo "Stage"                                                                                      
+  Release Approval:
     docker:
       - image: microsoft/azure-cli:latest
     steps:
       # LOGIN ONTO AZURE WITH EXISTING SERVICE PRINCIPALe
-      - run: |
-          az login --service-principal -u $AZURE_SERVICE_PRINC --password $AZURE_SERVICE_PRINC_PASSWORD --tenant $AZURE_TENANT
-          az webapp delete -n $AZ_WEBAPP_NAME -g $AZ_RESOURCE_GRP                
+      - run:
+          name: Production - Cutover Staging Environment to Production 
+          command: |
+            echo "production Release - DNS Change" 
+  Release to Production:
+    docker:
+      - image: microsoft/azure-cli:latest
+    steps:
+      # LOGIN ONTO AZURE WITH EXISTING SERVICE PRINCIPALe
+      - run:
+          name: Production - DNS Cutover to 'Live' Production 
+          command: |
+            echo "production Release - DNS Change"
+      - run:
+          name: Production - Smoke Test 
+          command: |
+            echo "smaoke test"
+      - run:
+          name: Production - Start Production Monitoring 
+          command: |
+            echo "Start Monitoring"                              
 workflows:
   version: 2
   provision_build_and_deploy:
     jobs:
-     - provisionAZWebApp
-     - buildApp:
+     - Integrate 
+     - Deploy Environments:
           requires:
-            - provisionAZWebApp
-     - unProvisionAZWebApp:
+            - Integrate 
+     - Release Approval:
           type: approval
           requires:
-           - buildApp       
+           - Deploy Environments 
+     - Release to Production:
+          requires:
+           - Release Approval             
